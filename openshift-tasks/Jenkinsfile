@@ -63,8 +63,8 @@ podTemplate(
               // TBD: Execute Sonarqube Tests
             }
           }       
-        }
       }
+    
       // Publish the built war file to Nexus
       stage('Publish to Nexus') {
         echo "Publish to Nexus"

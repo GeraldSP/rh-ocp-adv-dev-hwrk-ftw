@@ -6,7 +6,7 @@ podTemplate(
   containers: [
     containerTemplate(
       name: "jnlp",
-      image: "docker-registry.default.svc:5000/${env.GUID}-jenkins/jenkins-agent-appdev",
+      image: "docker-registry.default.svc:5000/gdsp01-jenkins/jenkins-agent-appdev",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi",
       resourceRequestCpu: "1",
@@ -18,8 +18,8 @@ podTemplate(
     // Define Maven Command to point to the correct
     // settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
-    def devProject = "${env.GUID}-tasks-dev"
-    def prodProject = "${env.GUID}-tasks-prod"
+    def devProject = "gdsp01-tasks-dev"
+    def prodProject = "gdsp01-tasks-prod"
 
     // Checkout Source Code.
     stage('Checkout Source') {

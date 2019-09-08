@@ -102,8 +102,9 @@ podTemplate(
               def configmap = openshift.create('configmap', 'tasks-config', '--from-file=./configuration/application-users.properties', '--from-file=./configuration/application-roles.properties' )
 
               // Deploy the development application.
+              openshift.set("env", "dc/tasks", "VERSION='${devTag} (tasks-dev)'" )
               openshift.selector("dc", "tasks").rollout().latest();
-
+              
               // Wait for application to be deployed
               def dc = openshift.selector("dc", "tasks").object()
               def dc_version = dc.status.latestVersion
@@ -158,7 +159,7 @@ podTemplate(
               dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${prodTag}"
 
               openshift.apply(dc)
-
+              openshift.set("env", "dc/tasks", "VERSION='${prodTag} (prod) (${destApp})'" )
               // Update Config Map in change config files changed in the source
               openshift.selector("configmap", "${destApp}-config").delete()
               def configmap = openshift.create("configmap", "${destApp}-config", "--from-file=./configuration/application-users.properties", "--from-file=./configuration/application-roles.properties" )
